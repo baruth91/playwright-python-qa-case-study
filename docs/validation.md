@@ -55,9 +55,18 @@ separate manual opt-in job with a configurable authorized URL. Local execution
 still selects all 18 tests. This split does not reclassify the failed attempt as
 a success or establish that Toolshop UI works on Linux.
 
-The revised workflow's result will be recorded after execution. JUnit and failure
-artifacts are retained for seven days. No CAPTCHA handling, stealth settings,
-response substitution or automatic retries are used.
+[The revised default workflow](https://github.com/baruth91/playwright-python-qa-case-study/actions/runs/40688756239)
+completed successfully on 2026-10-28 at code revision `82227ce`:
+**9 passed, 0 failed, 0 errors, 0 skipped**, with 21.309 seconds recorded in JUnit.
+Those are exactly 2 API checks and 7 lab exercises. The separate Toolshop UI job
+was intentionally not selected; its scenarios were not executed in this run.
+
+After adding an explicit HTTP-status diagnostic to catalog navigation, the local
+Toolshop smoke selection also passed: **2 passed, 16 deselected in 30.38 seconds**.
+This checks search and the journey to the guest form; it is not a new full-suite run.
+
+JUnit and failure artifacts are retained for seven days. No CAPTCHA handling,
+stealth settings, response substitution or automatic retries are used.
 
 ## Remaining limitations
 

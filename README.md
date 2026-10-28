@@ -117,6 +117,9 @@ Cloudflare human verification blocked the Toolshop website before its 9 business
 scenarios could run. A green default workflow therefore does **not** mean all 18
 cases passed in CI.
 
+[The revised default CI run passed all 9 selected cases](https://github.com/baruth91/playwright-python-qa-case-study/actions/runs/40688756239)
+on Ubuntu on 2026-10-28, with zero test failures or skips.
+
 To explicitly attempt the Toolshop UI job, open **Actions → QA case study checks →
 Run workflow**, enable `run_shop_ui`, and provide an authorized Toolshop URL reachable
 from the runner. The hosted default may still present a challenge. Tests keep that
