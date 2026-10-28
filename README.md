@@ -111,6 +111,10 @@ dispatch. It runs serially in Chromium to keep traffic modest. It preserves JUni
 results and failure artifacts for seven days. No scheduled runs or automatic
 retries hide intermittent failures.
 
+Initial validation: **18 tests passed locally on Windows in 69.92 seconds**.
+The first Actions attempt could not start a hosted runner, so Linux/CI execution
+remains unverified. See the validation record for the evidence and next step.
+
 Read [the validation record](docs/validation.md) for the actual execution evidence
 and the distinction between local verification and the GitHub workflow.
 Read [failure investigation](docs/failure-investigation.md) before changing a

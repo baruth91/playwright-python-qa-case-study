@@ -41,9 +41,18 @@ No product defect is claimed without reproducible evidence against an expectatio
 
 ## Continuous integration
 
-The workflow targets Ubuntu 24.04 and Python 3.13, installs Chromium and its system
-dependencies, executes the suite and retains JUnit/failure artifacts. Its actual
-first-run status will be recorded separately from local validation.
+The workflow is configured for Ubuntu 24.04 and Python 3.13, Chromium installation,
+suite execution and JUnit/failure artifacts.
+
+[The first workflow attempt](https://github.com/baruth91/playwright-python-qa-case-study/actions/runs/40621032250)
+could not start a hosted runner. No setup steps or tests executed in that job.
+**Linux/CI execution is therefore unverified.** The owner must resolve the
+account-level runner prerequisite before the workflow can be validated. This is
+distinct from the local 18-case passing result above; no CI success is claimed.
+
+After runner access is available, use the Actions tab's manual dispatch, inspect
+the actual result and update this record. If a failure occurs, retain its evidence
+and diagnose it before changing selectors or expectations.
 
 ## Remaining limitations
 
