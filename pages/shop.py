@@ -20,7 +20,12 @@ class Catalog:
         self.prices = page.get_by_test_id("product-price")
 
     def open(self) -> None:
-        self.page.goto(self.base_url)
+        response = self.page.goto(self.base_url)
+        assert response is not None and response.ok, (
+            f"Catalog navigation failed: HTTP {response.status if response else 'no response'}. "
+            "Inspect the trace for an environment error or human-verification challenge; "
+            "use an authorized test environment rather than bypassing the challenge."
+        )
         expect(self.names.first).to_be_visible()
 
     def search(self, query: str) -> None:

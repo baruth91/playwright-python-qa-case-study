@@ -106,14 +106,22 @@ payment data in this project.
 
 ## Results and continuous integration
 
-The GitHub Actions workflow runs on pushes to `main`, pull requests and manual
-dispatch. It runs serially in Chromium to keep traffic modest. It preserves JUnit
-results and failure artifacts for seven days. No scheduled runs or automatic
-retries hide intermittent failures.
+The default GitHub Actions job runs **9 cases: 2 API checks and 7 interaction lab
+exercises** on pushes to `main`, pull requests and manual dispatch. It runs serially
+in Chromium and preserves JUnit results and failure artifacts for seven days.
+No scheduled runs or automatic retries hide intermittent failures.
 
 Initial validation: **18 tests passed locally on Windows in 69.92 seconds**.
-The first Actions attempt could not start a hosted runner, so Linux/CI execution
-remains unverified. See the validation record for the evidence and next step.
+When the complete suite ran on a GitHub-hosted runner, those 9 cases passed, but
+Cloudflare human verification blocked the Toolshop website before its 9 business
+scenarios could run. A green default workflow therefore does **not** mean all 18
+cases passed in CI.
+
+To explicitly attempt the Toolshop UI job, open **Actions → QA case study checks →
+Run workflow**, enable `run_shop_ui`, and provide an authorized Toolshop URL reachable
+from the runner. The hosted default may still present a challenge. Tests keep that
+failure visible; this project does not automate human verification or bypass it.
+Local `python -m pytest` still selects all 18 cases.
 
 Read [the validation record](docs/validation.md) for the actual execution evidence
 and the distinction between local verification and the GitHub workflow.

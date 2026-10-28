@@ -44,6 +44,14 @@ documents local Docker execution and restrictions on redistribution and hosting.
 Before packaging a local application, review its current terms. A future controlled
 baseline should record application revision, seed data and browser version.
 
+On 2026-10-28, GitHub's hosted runner received HTTP 403 and a Cloudflare human
+verification page at the Toolshop URL. Its API and The Internet remained usable.
+The default CI scope is therefore the 9 API/lab checks, with a separate opt-in
+Toolshop UI job. This is an environment boundary, not a corrected product defect
+or a successful browser business run. Local selection remains all 18 tests.
+We do not solve the challenge, use stealth settings, proxy around it, replace real
+responses with mocks, or skip failing business checks while calling them passes.
+
 ## Dependency baseline and maintenance
 
 The initial versions are exact pins matching the installed baseline used for

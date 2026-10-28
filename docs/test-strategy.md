@@ -19,6 +19,10 @@ browser evidence about rendering and interactions.
 - API checks are read-only. Cart scenarios use anonymous disposable demo data.
 - Upload exercises create a synthetic temporary file.
 - Run serially, without automatic retries or scheduled traffic against public demos.
+- Default CI selects the 2 API checks and 7 labs. The 9 Toolshop UI scenarios are
+  a separate manual opt-in job because the public host challenged GitHub runners.
+  A green default CI result validates those 9 selected cases only; the separate
+  Toolshop job is intentionally not run unless explicitly requested.
 
 ## Evidence and failure policy
 

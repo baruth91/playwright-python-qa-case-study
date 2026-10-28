@@ -5,6 +5,15 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      run_shop_ui:
+        description: 'Also run Toolshop UI (public host may require human verification)'
+        type: boolean
+        default: false
+      shop_url:
+        description: 'Toolshop URL reachable by the runner; use an authorized environment'
+        type: string
+        default: 'https://practicesoftwaretesting.com'
 
 permissions:
   contents: read
@@ -15,6 +24,7 @@ concurrency:
 
 jobs:
   chromium:
+    name: API and interaction lab (9 cases)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -27,13 +37,42 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Install Chromium and OS dependencies
         run: python -m playwright install --with-deps chromium
-      - name: Execute UI, API and learning exercises
-        run: python -m pytest --junitxml=reports/junit.xml
+      - name: Execute API and interaction lab checks
+        run: python -m pytest -m 'api or lab' --junitxml=reports/junit.xml
       - name: Preserve results and failure diagnostics
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: qa-case-study-results
+          path: |
+            reports/
+            test-results/
+          retention-days: 7
+
+  shop-ui:
+    name: Toolshop UI (9 cases, opt-in)
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_shop_ui }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SHOP_URL: ${{ inputs.shop_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install tested dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Install Chromium and OS dependencies
+        run: python -m playwright install --with-deps chromium
+      - name: Execute Toolshop browser checks
+        run: python -m pytest -m shop --junitxml=reports/shop-junit.xml
+      - name: Preserve Toolshop results and failure diagnostics
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: toolshop-ui-results
           path: |
             reports/
             test-results/

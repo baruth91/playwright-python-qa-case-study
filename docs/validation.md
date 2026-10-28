@@ -41,18 +41,23 @@ No product defect is claimed without reproducible evidence against an expectatio
 
 ## Continuous integration
 
-The workflow is configured for Ubuntu 24.04 and Python 3.13, Chromium installation,
-suite execution and JUnit/failure artifacts.
+The first workflow could not start a hosted runner. That prerequisite was resolved.
 
-[The first workflow attempt](https://github.com/baruth91/playwright-python-qa-case-study/actions/runs/40621032250)
-could not start a hosted runner. No setup steps or tests executed in that job.
-**Linux/CI execution is therefore unverified.** The owner must resolve the
-account-level runner prerequisite before the workflow can be validated. This is
-distinct from the local 18-case passing result above; no CI success is claimed.
+[The first executed complete-suite run](https://github.com/baruth91/playwright-python-qa-case-study/actions/runs/40688231617)
+ran on 2026-10-28 with Ubuntu 24.04, Python 3.13.17 and Chromium:
+**9 passed, 9 failed in 64.40 seconds**. Both API checks and all seven labs passed.
+All nine Toolshop UI cases stopped at initial navigation: traces show HTTP 403,
+and screenshots show Cloudflare's human-verification page instead of the catalog.
+There is no evidence from this run about the Toolshop business outcomes.
 
-After runner access is available, use the Actions tab's manual dispatch, inspect
-the actual result and update this record. If a failure occurs, retain its evidence
-and diagnose it before changing selectors or expectations.
+The default workflow now selects API and lab checks explicitly. Toolshop UI is a
+separate manual opt-in job with a configurable authorized URL. Local execution
+still selects all 18 tests. This split does not reclassify the failed attempt as
+a success or establish that Toolshop UI works on Linux.
+
+The revised workflow's result will be recorded after execution. JUnit and failure
+artifacts are retained for seven days. No CAPTCHA handling, stealth settings,
+response substitution or automatic retries are used.
 
 ## Remaining limitations
 
