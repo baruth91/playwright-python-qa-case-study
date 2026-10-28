@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers --tracing=retain-on-failure --screenshot=only-on-failure"
+markers = [
+  "shop: Toolshop shopping journey",
+  "api: read-only Toolshop API checks",
+  "lab: focused web interaction exercises",
+  "smoke: small set of critical checks",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"

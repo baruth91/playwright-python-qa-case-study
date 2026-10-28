@@ -1,0 +1,40 @@
+name: QA case study checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qa-case-study-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install tested dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Install Chromium and OS dependencies
+        run: python -m playwright install --with-deps chromium
+      - name: Execute UI, API and learning exercises
+        run: python -m pytest --junitxml=reports/junit.xml
+      - name: Preserve results and failure diagnostics
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: qa-case-study-results
+          path: |
+            reports/
+            test-results/
+          retention-days: 7
